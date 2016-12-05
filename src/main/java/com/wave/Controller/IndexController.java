@@ -1,10 +1,8 @@
-package com.wave.Controller;
+package com.wave.controller;
 
 import com.wave.dao.ContextUtil;
 import com.wave.dao.UserDAO;
 import com.wave.model.User;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

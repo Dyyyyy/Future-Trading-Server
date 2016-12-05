@@ -124,6 +124,14 @@ public class User {
         return phone_number;
     }
 
+    public List<UserContract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<UserContract> contracts) {
+        this.contracts = contracts;
+    }
+
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }

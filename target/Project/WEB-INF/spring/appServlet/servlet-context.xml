@@ -12,9 +12,9 @@
     <!-- data source -->
     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <beans:property name="url" value="jdbc:mysql://10.60.42.203:8888/DB_05"/>
-        <beans:property name="username" value="T05"/>
-        <beans:property name="password" value="ywHJOiq2"/>
+        <beans:property name="url" value="jdbc:mysql://localhost:3306/futuredb"/>
+        <beans:property name="username" value="root"/>
+        <beans:property name="password" value="123456"/>
     </beans:bean>
 
     <beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -22,13 +22,14 @@
         <beans:property name="annotatedClasses">
             <beans:list>
                 <beans:value>com.wave.model.ContractItem</beans:value>
-                <beans:value>com.wave.model.ContractTradeInfo</beans:value>
+                <beans:value>com.wave.model.HistoryTrade</beans:value>
                 <beans:value>com.wave.model.News</beans:value>
                 <beans:value>com.wave.model.NewsTag</beans:value>
                 <beans:value>com.wave.model.TradeRecord</beans:value>
                 <beans:value>com.wave.model.TradingTime</beans:value>
                 <beans:value>com.wave.model.User</beans:value>
                 <beans:value>com.wave.model.UserTag</beans:value>
+                <beans:value>com.wave.model.UserContract</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -47,7 +48,7 @@
     <beans:bean id="ContractItemDAO" class="com.wave.dao.ContractItemDAO">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </beans:bean>
-    <beans:bean id="ContractTradeInfoDAO" class="com.wave.dao.ContractTradeInfoDAO">
+    <beans:bean id="HistoryTradeDAO" class="com.wave.dao.HistoryTradeDAO">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </beans:bean>
     <beans:bean id="NewsDAO" class="com.wave.dao.NewsDAO">
@@ -68,17 +69,20 @@
     <beans:bean id="UserTagDAO" class="com.wave.dao.UserTagDAO">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </beans:bean>
+    <beans:bean id="UserTractDAO" class="com.wave.dao.UserContractDAO">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </beans:bean>
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing
         infrastructure -->
 
-    <!-- Enables the Spring MVC @Controller programming model -->
+    <!-- Enables the Spring MVC @controller programming model -->
     <annotation-driven/>
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving
         up static resources in the ${webappRoot}/resources directory -->
     <resources mapping="/resources/**" location="/resources/"/>
-    <context:component-scan base-package="com.wave.Controller"/>
+    <context:component-scan base-package="com.wave.controller"/>
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
         in the /WEB-INF/views directory -->
