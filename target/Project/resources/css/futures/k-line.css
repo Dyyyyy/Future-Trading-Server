@@ -1,0 +1,44 @@
+#k-line{
+    width:1180px;
+    height:600px;
+    margin:20px auto 0px;
+}
+/*顶部选择时间区域*/
+#k-line-top{
+    background: #34302d;
+    width:1180px;
+    height:30px;
+    line-height:30px;
+}
+#k-line-top #time-label{
+    color:#eee;
+    float:left;
+    margin-left:10px;
+}
+#k-line-top #time{
+    float:left;
+    margin-left:20px;
+}
+#k-line-top #time li{
+    list-style: none;
+    float:left;
+    width:50px;
+    height:30px;
+    color:#1987da;
+    cursor:pointer;
+    text-align:center;
+}
+#k-line-top #time li:hover{
+    background: rgba(0,0,0,0.9);
+    color:#eee;
+}
+/*k线图主体*/
+#k-line-body{
+    background: rgba(0,0,0,0.9);
+    width:1180px;
+    height:570px;
+}
+#k-line-basic{
+    width:1180px;
+    height:370px;
+}
