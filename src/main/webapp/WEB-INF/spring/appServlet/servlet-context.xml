@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <!-- data source -->
-    <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <beans:bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <beans:property name="url" value="jdbc:mysql://localhost:3306/futuredb"/>
         <beans:property name="username" value="root"/>
@@ -18,7 +18,7 @@
     </beans:bean>
 
     <beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <beans:property name="dataSource" ref="dataSource"/>
+        <beans:property name="DataSource" ref="DataSource"/>
         <beans:property name="annotatedClasses">
             <beans:list>
                 <beans:value>com.wave.model.ContractItem</beans:value>
@@ -42,7 +42,7 @@
         </beans:property>
     </beans:bean>
 
-    <beans:bean id="ContextUtil" class="com.wave.dao.ContextUtil"/>
+    <beans:bean id="ContextUtil" class="com.wave.staticsetting.ContextUtil"/>
 
 
     <beans:bean id="ContractItemDAO" class="com.wave.dao.ContractItemDAO">

@@ -1,5 +1,7 @@
 package com.wave.cache;
 
+import org.springframework.scheduling.annotation.Scheduled;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -132,5 +134,9 @@ public class ContractTradeInfo {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void refresh(String str){
+        //
     }
 }

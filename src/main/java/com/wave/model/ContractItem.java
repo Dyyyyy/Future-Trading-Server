@@ -1,5 +1,7 @@
 package com.wave.model;
 
+import com.wave.cache.ContractTradeInfo;
+
 import javax.persistence.*;
 import javax.swing.text.StringContent;
 
@@ -24,6 +26,9 @@ public class ContractItem {
     private int last_trading_day;
     private int lld_type;
     private int last_delivery_day;
+
+    @Transient
+    private ContractTradeInfo info;
 
     @Column(length = 50)
     private String delivery_grade;
@@ -175,5 +180,9 @@ public class ContractItem {
 
     public int getId() {
         return id;
+    }
+
+    public ContractTradeInfo getInfo() {
+        return info;
     }
 }

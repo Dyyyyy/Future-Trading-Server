@@ -1,6 +1,6 @@
 package com.wave.controller;
 
-import com.wave.dao.ContextUtil;
+import com.wave.staticsetting.ContextUtil;
 import com.wave.dao.UserDAO;
 import com.wave.model.User;
 import org.springframework.stereotype.Controller;

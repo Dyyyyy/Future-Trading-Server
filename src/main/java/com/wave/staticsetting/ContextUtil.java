@@ -1,4 +1,4 @@
-package com.wave.dao;
+package com.wave.staticsetting;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

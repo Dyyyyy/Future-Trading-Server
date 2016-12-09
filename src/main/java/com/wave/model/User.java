@@ -1,5 +1,7 @@
 package com.wave.model;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 import javax.swing.text.StringContent;
 import java.util.ArrayList;
@@ -24,8 +26,10 @@ public class User {
     @Column(length = 10)
     private String first_name;
 
-    @Column(length = 20)
     private String password;
+
+    @Column(length = 30)
+    private String salt;
 
     private int age;
 
@@ -34,10 +38,10 @@ public class User {
 
     private int sex;
 
-    @Column(length = 20)
+    @Column(length = 20,unique = true)
     private String phone_number;
 
-    @Column(length = 50)
+    @Column(length = 50,unique = true)
     private String email;
 
     private float account_balance;
@@ -50,6 +54,14 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class)
     private List<UserTag> tags=new ArrayList<UserTag>();
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public List<UserTag> getTags() {
         return tags;
