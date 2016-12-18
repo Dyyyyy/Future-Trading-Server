@@ -1,8 +1,10 @@
 package com.wave.cache;
+;
+import com.wave.model.ContractItem;
+import com.wave.model.HistoryTrade;
+import com.wave.repository.EntityRepository.HistoryTradeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.scheduling.annotation.Scheduled;
-
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -18,12 +20,21 @@ public class ContractTradeInfo {
     private float Bid;                         //买价
     private float Ask;                         //卖价
     private float latest_price;                //最新价
-    private float settlement_Price;            //结算价
+    private float settlement_price;            //结算价
     private float yesterday_settlement_price;  //昨结算
     private int open_Interest;               //持仓量
     private int volume;                      //成交量
 
+    private ContractItem contract_item;
     private Date date;                       //日期
+
+    @Autowired
+    HistoryTradeRepository repository;
+
+    public void setContract_item(ContractItem contract_item) {
+        this.contract_item = contract_item;
+    }
+
     public String getName() {
         return name;
     }
@@ -97,11 +108,11 @@ public class ContractTradeInfo {
     }
 
     public float getSettlement_Price() {
-        return settlement_Price;
+        return settlement_price;
     }
 
     public void setSettlement_Price(float settlement_Price) {
-        this.settlement_Price = settlement_Price;
+        this.settlement_price = settlement_Price;
     }
 
     public float getYesterday_settlement_price() {
@@ -136,7 +147,30 @@ public class ContractTradeInfo {
         this.date = date;
     }
 
-    public void refresh(String str){
-        //
+    public void refresh(String str,Date current_time){
+        HistoryTrade history_trade=new HistoryTrade();
+        history_trade.setContract_item(contract_item);
+        history_trade.setOpening_price(opening_price);
+        history_trade.setHighest_price(highest_price);
+        history_trade.setLowest_price(lowest_price);
+        history_trade.setSettlement_price(settlement_price);
+        history_trade.setDate(date);
+        String[] data=str.split(",");
+        if(data.length>=18){
+            history_trade.setVolume(Integer.parseInt(data[14])-volume);
+        }
+        repository.save(history_trade);
+        opening_price=Integer.parseInt(data[2]);
+        highest_price=Integer.parseInt(data[3]);
+        lowest_price=Integer.parseInt(data[4]);
+        yesterday_closing_price=Integer.parseInt(data[5]);
+        Bid=Integer.parseInt(data[6]);
+        Ask=Integer.parseInt(data[7]);
+        latest_price=Integer.parseInt(data[8]);
+        settlement_price=Integer.parseInt(data[9]);
+        yesterday_settlement_price=Integer.parseInt(data[10]);
+        open_Interest=Integer.parseInt(data[13]);
+        volume=Integer.parseInt(data[14]);
+        date=current_time;
     }
 }

@@ -12,7 +12,7 @@ import javax.swing.text.StringContent;
 public class ContractItem {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne(targetEntity = TradingTime.class)
     @JoinColumn(name = "trading_time_id", foreignKey = @ForeignKey(name = "TRADING_TIME_ID_FK"))
@@ -178,11 +178,19 @@ public class ContractItem {
         this.delivery_point = delivery_point;
     }
 
-    public int getId() {
+    public ContractTradeInfo getInfo() {
+        return info;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public ContractTradeInfo getInfo() {
-        return info;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setInfo(ContractTradeInfo info) {
+        this.info = info;
     }
 }

@@ -10,10 +10,10 @@ import java.util.Date;
 public class HistoryTrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne(targetEntity = ContractItem.class)
-    @JoinColumn(name = "trading_time_id", foreignKey = @ForeignKey(name = "TRADING_TIME_ID_FK"))
+    @JoinColumn(name = "contract_item_id", foreignKey = @ForeignKey(name = "HISTORYTRADE_CONTRACT_ID_FK"))
     private ContractItem contract_item;
     private float opening_price;
     private float highest_price;
@@ -24,8 +24,12 @@ public class HistoryTrade {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public ContractItem getContract_item() {

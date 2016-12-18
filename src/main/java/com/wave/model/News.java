@@ -13,7 +13,7 @@ import java.util.List;
 public class News {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String title;
     private String content;
@@ -28,8 +28,20 @@ public class News {
     private List<NewsTag> tags=new ArrayList<NewsTag>();
 
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<NewsTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<NewsTag> tags) {
+        this.tags = tags;
     }
 
     private String url;

@@ -10,14 +10,14 @@ import java.util.Date;
 public class TradeRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "USER_ID_FK"))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "TRADERECORD_USER_ID_FK"))
     private User user;
 
     @ManyToOne(targetEntity = ContractItem.class)
-    @JoinColumn(name = "contract_item_id", foreignKey = @ForeignKey(name = "CONTRACT_ITEM_ID_FK"))
+    @JoinColumn(name = "contract_item_id", foreignKey = @ForeignKey(name = "TRADERECORD_CONTRACT_ID_FK"))
     private ContractItem contract_item;
 
     private int trading_type;
@@ -28,8 +28,12 @@ public class TradeRecord {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public User getUser() {

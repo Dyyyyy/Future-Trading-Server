@@ -16,6 +16,9 @@ public class ReturnStatus {
     public static int REGISTER_FAIL=1;
 
     public static int LOGIN_SUCCESS=0;
-    public static int LOGIN_USER_NONEXIST=1;
-    public static int LOGIN_PASSERROR=2;
+    public static int LOGIN_DATA_MISSING=1;
+    public static int LOGIN_USER_NONEXIST=2;
+    public static int LOGIN_PASSERROR=3;
+
+    public static int LOGOUT_SUCCESS=0;
 }
