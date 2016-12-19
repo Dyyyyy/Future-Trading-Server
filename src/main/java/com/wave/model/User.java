@@ -45,10 +45,10 @@ public class User {
 
     private float account_balance;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user")
     private List<TradeRecord> records=new ArrayList<TradeRecord>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class, mappedBy = "user")
     private List<UserContract> contracts=new ArrayList<UserContract>();
 
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class)

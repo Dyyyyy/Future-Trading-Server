@@ -28,11 +28,15 @@ public class ContractTradeInfo {
     private ContractItem contract_item;
     private Date date;                       //日期
 
-    @Autowired
+    private boolean isinit;
+
     HistoryTradeRepository repository;
 
-    public void setContract_item(ContractItem contract_item) {
-        this.contract_item = contract_item;
+    public ContractTradeInfo(String n, String abbr, ContractItem item,HistoryTradeRepository h){
+        name=n;
+        abbreviation=abbr;
+        isinit=false;
+        repository=h;
     }
 
     public String getName() {
@@ -148,18 +152,25 @@ public class ContractTradeInfo {
     }
 
     public void refresh(String str,Date current_time){
-        HistoryTrade history_trade=new HistoryTrade();
-        history_trade.setContract_item(contract_item);
-        history_trade.setOpening_price(opening_price);
-        history_trade.setHighest_price(highest_price);
-        history_trade.setLowest_price(lowest_price);
-        history_trade.setSettlement_price(settlement_price);
-        history_trade.setDate(date);
-        String[] data=str.split(",");
-        if(data.length>=18){
-            history_trade.setVolume(Integer.parseInt(data[14])-volume);
+        if(str==null||current_time==null) return;
+        String[] data = str.split(",");
+        if(data.length<14) return;
+        if(isinit) {
+            HistoryTrade history_trade = new HistoryTrade();
+            history_trade.setContract_item(contract_item);
+            history_trade.setOpening_price(opening_price);
+            history_trade.setHighest_price(highest_price);
+            history_trade.setLowest_price(lowest_price);
+            history_trade.setSettlement_price(settlement_price);
+            history_trade.setDate(date);
+            if (data.length >= 18) {
+                history_trade.setVolume(Integer.parseInt(data[14]) - volume);
+            }
+            repository.save(history_trade);
         }
-        repository.save(history_trade);
+        else{
+            isinit=true;
+        }
         opening_price=Integer.parseInt(data[2]);
         highest_price=Integer.parseInt(data[3]);
         lowest_price=Integer.parseInt(data[4]);

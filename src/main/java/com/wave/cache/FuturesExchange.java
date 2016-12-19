@@ -2,8 +2,8 @@ package com.wave.cache;
 
 
 import com.wave.repository.CacheRepository.ProductFutureRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import com.wave.repository.EntityRepository.ContractItemRepository;
+import com.wave.repository.EntityRepository.HistoryTradeRepository;
 
 import javax.persistence.*;
 import java.util.*;
@@ -21,14 +21,12 @@ public class FuturesExchange {
     @Column(length = 10)
     private String abbreviation;
 
+    @OneToMany(mappedBy = "futures_exchange", cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = ProductFuture.class)
+    private List<ProductFuture> futures_list;
 
 
     @Transient
-    @Autowired
-    private ProductFutureRepository repository;
-
-    @Transient
-    private HashMap<String,ProductFuture> futures;
+    private HashMap<String,ProductFuture> futures=new HashMap<>();
 
     public String getExchange_name() {
         return exchange_name;
@@ -42,12 +40,24 @@ public class FuturesExchange {
         this.id = id;
     }
 
-    public void init(){
-        List<ProductFuture> future_list=repository.findByExchange(id);
+    public void init(ProductFutureRepository p_repository, ContractItemRepository c_repository, HistoryTradeRepository h_repository){
+        List<ProductFuture> future_list=p_repository.findByExchange(this);
         for(ProductFuture future:future_list){
-            future.init();
-            futures.put(future.getProduct_name(),future);
+            future.init(c_repository,h_repository);
+            futures.put(future.getAbbreviation(),future);
         }
+    }
+
+    public void setFutures(HashMap<String, ProductFuture> futures) {
+        this.futures = futures;
+    }
+
+    public List<ProductFuture> getFutures_list() {
+        return futures_list;
+    }
+
+    public void setFutures_list(List<ProductFuture> futures_list) {
+        this.futures_list = futures_list;
     }
 
     public String getAbbreviation() {
