@@ -1,6 +1,7 @@
 package com.wave.cache;
 
 import com.wave.model.ContractItem;
+import com.wave.model.HistoryTrade;
 import com.wave.repository.EntityRepository.ContractItemRepository;
 import com.wave.repository.EntityRepository.HistoryTradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,9 @@ public class ProductFuture {
     private String abbreviation;
 
     @Transient
-    private HistoryTradeRepository h_repository;
-
-    @Transient
     private ContractItem[] items = new ContractItem[13];
 
-    public void init(ContractItemRepository c_repository, HistoryTradeRepository h){
-        h_repository=h;
+    public void init(ContractItemRepository c_repository){
         List<ContractItem> items_list=c_repository.findByContractObject(abbreviation);
         try {
             int avail_pos=-1;
@@ -105,14 +102,14 @@ public class ProductFuture {
         items[current_month] = item;
     }
 
-    public void refreshContracts(String[] strings, Date current_time){
+    public void refreshContracts(String[] strings, Date current_time, List<HistoryTrade> list){
         for(int i=0;i<13;i++){
             if(items[i]!=null) {
                 if(items[i].getInfo()==null) {
-                    ContractTradeInfo info = new ContractTradeInfo(items[i].getSecShortName(),items[i].getTicker(),items[i],h_repository);
+                    ContractTradeInfo info = new ContractTradeInfo(items[i].getSecShortName(),items[i].getTicker(),items[i]);
                     items[i].setInfo(info);
                 }
-                items[i].getInfo().refresh(strings[i], current_time);
+                items[i].getInfo().refresh(strings[i], current_time, list);
             }
         }
     }

@@ -40,10 +40,10 @@ public class FuturesExchange {
         this.id = id;
     }
 
-    public void init(ProductFutureRepository p_repository, ContractItemRepository c_repository, HistoryTradeRepository h_repository){
+    public void init(ProductFutureRepository p_repository, ContractItemRepository c_repository){
         List<ProductFuture> future_list=p_repository.findByExchange(this);
         for(ProductFuture future:future_list){
-            future.init(c_repository,h_repository);
+            future.init(c_repository);
             futures.put(future.getAbbreviation(),future);
         }
     }

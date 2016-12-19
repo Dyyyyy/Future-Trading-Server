@@ -6,6 +6,7 @@ import com.wave.repository.EntityRepository.HistoryTradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Json on 2016/11/13.
@@ -30,13 +31,10 @@ public class ContractTradeInfo {
 
     private boolean isinit;
 
-    HistoryTradeRepository repository;
-
-    public ContractTradeInfo(String n, String abbr, ContractItem item,HistoryTradeRepository h){
+    public ContractTradeInfo(String n, String abbr, ContractItem item){
         name=n;
         abbreviation=abbr;
         isinit=false;
-        repository=h;
     }
 
     public String getName() {
@@ -151,7 +149,7 @@ public class ContractTradeInfo {
         this.date = date;
     }
 
-    public void refresh(String str,Date current_time){
+    public void refresh(String str,Date current_time, List<HistoryTrade> list){
         if(str==null||current_time==null) return;
         String[] data = str.split(",");
         if(data.length<14) return;
@@ -166,20 +164,20 @@ public class ContractTradeInfo {
             if (data.length >= 18) {
                 history_trade.setVolume(Integer.parseInt(data[14]) - volume);
             }
-            repository.save(history_trade);
+            list.add(history_trade);
         }
         else{
             isinit=true;
         }
-        opening_price=Integer.parseInt(data[2]);
-        highest_price=Integer.parseInt(data[3]);
-        lowest_price=Integer.parseInt(data[4]);
-        yesterday_closing_price=Integer.parseInt(data[5]);
-        Bid=Integer.parseInt(data[6]);
-        Ask=Integer.parseInt(data[7]);
-        latest_price=Integer.parseInt(data[8]);
-        settlement_price=Integer.parseInt(data[9]);
-        yesterday_settlement_price=Integer.parseInt(data[10]);
+        opening_price=Float.parseFloat(data[2]);
+        highest_price=Float.parseFloat(data[3]);
+        lowest_price=Float.parseFloat(data[4]);
+        yesterday_closing_price=Float.parseFloat(data[5]);
+        Bid=Float.parseFloat(data[6]);
+        Ask=Float.parseFloat(data[7]);
+        latest_price=Float.parseFloat(data[8]);
+        settlement_price=Float.parseFloat(data[9]);
+        yesterday_settlement_price=Float.parseFloat(data[10]);
         open_Interest=Integer.parseInt(data[13]);
         volume=Integer.parseInt(data[14]);
         date=current_time;

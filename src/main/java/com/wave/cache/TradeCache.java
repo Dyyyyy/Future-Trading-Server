@@ -1,6 +1,7 @@
 package com.wave.cache;
 
 import com.wave.model.ContractItem;
+import com.wave.model.HistoryTrade;
 import com.wave.repository.CacheRepository.FutureExchangeRepository;
 import com.wave.repository.CacheRepository.ProductFutureRepository;
 import com.wave.repository.EntityRepository.ContractItemRepository;
@@ -71,7 +72,7 @@ public class TradeCache {
     public void init() {
         exchanges = f_repository.findAll();
         for (FuturesExchange exchange : exchanges) {
-            exchange.init(p_repository, c_repository, h_repository);
+            exchange.init(p_repository, c_repository);
             Collection<ProductFuture> futures = exchange.getFutures();
             for (ProductFuture future : futures) {
                 ContractItem[] items = future.getItems();
@@ -144,21 +145,24 @@ public class TradeCache {
             int x = 0;
             int y = 0;
             int pos = 0;
-            while ((str = br.readLine()) != null && pos < contract_count) {
+            while ((str = br.readLine()) != null && x < contract_count) {
                 p_f_data[x][y] = str;
                 pos++;
                 x = pos / 13;
                 y = pos % 13;
             }
             x = 0;
+            List<HistoryTrade> trades=new ArrayList<>();
             for (FuturesExchange exchange : exchanges) {
                 for (ProductFuture future : exchange.getFutures()) {
                     if (x < contract_count) {
-                        future.refreshContracts(p_f_data[x], current_date);
+                        future.refreshContracts(p_f_data[x], current_date,trades);
                         x++;
                     } else break;
                 }
             }
+            h_repository.save(trades);
+            System.out.println("trades: "+trades.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
