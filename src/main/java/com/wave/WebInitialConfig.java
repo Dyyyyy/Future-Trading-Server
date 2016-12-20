@@ -16,5 +16,6 @@ public class WebInitialConfig implements CommandLineRunner {
         tradeCache.init();
 
 	//other initial work
+	//test git push
     }
 }
