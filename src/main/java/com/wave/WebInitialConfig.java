@@ -14,5 +14,7 @@ public class WebInitialConfig implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         tradeCache.init();
+
+	//other initial work
     }
 }
