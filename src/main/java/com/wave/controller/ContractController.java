@@ -71,6 +71,4 @@ public class ContractController {
         }
         return result;
     }
-
-
 }

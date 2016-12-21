@@ -68,7 +68,6 @@ public class TradeCache {
         contracts_url = StaticConfig.CONTRACT_CURRENT_URL;
         contract_count = 0;
     }
-
     public List<FuturesExchange> getExchanges(){
         return exchanges;
     }
@@ -99,9 +98,9 @@ public class TradeCache {
         return this.contracts_url;
     }
 
-    /**
-     * update the data
-     */
+//    /**
+//     * update the data
+//     */
 //    @Scheduled(cron = "* * 9-11,14-15,21-23 ? * MON-FRI")
 //    public void updateDataSlotOne() {
 //        refresh();

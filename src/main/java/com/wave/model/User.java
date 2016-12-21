@@ -47,7 +47,6 @@ public class User {
     private String email;
 
     private float account_balance;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user",fetch = FetchType.EAGER)
     private Set<TradeRecord> records;
 
