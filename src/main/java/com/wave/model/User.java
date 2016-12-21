@@ -1,11 +1,14 @@
 package com.wave.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import javax.swing.text.StringContent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Json on 2016/11/14.
@@ -45,14 +48,14 @@ public class User {
 
     private float account_balance;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user")
-    private List<TradeRecord> records=new ArrayList<TradeRecord>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<TradeRecord> records;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class, mappedBy = "user")
-    private List<UserContract> contracts=new ArrayList<UserContract>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class, mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<UserContract> contracts;
 
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class)
-    private List<UserTag> tags=new ArrayList<UserTag>();
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class,fetch = FetchType.EAGER)
+    private Set<UserTag> tags;
 
     public Boolean getEnabled() {
         return enabled;
@@ -62,11 +65,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<UserTag> getTags() {
+    public Set<UserTag> getTags() {
         return tags;
     }
 
-    public void setTags(List<UserTag> tags) {
+    public void setTags(Set<UserTag> tags) {
         this.tags = tags;
     }
 
@@ -139,11 +142,11 @@ public class User {
         return phone_number;
     }
 
-    public List<UserContract> getContracts() {
+    public Set<UserContract> getContracts() {
         return contracts;
     }
 
-    public void setContracts(List<UserContract> contracts) {
+    public void setContracts(Set<UserContract> contracts) {
         this.contracts = contracts;
     }
 
@@ -167,11 +170,11 @@ public class User {
         this.account_balance = account_balance;
     }
 
-    public List<TradeRecord> getRecords() {
+    public Set<TradeRecord> getRecords() {
         return records;
     }
 
-    public void setRecords(List<TradeRecord> records) {
+    public void setRecords(Set<TradeRecord> records) {
         this.records = records;
     }
 }
