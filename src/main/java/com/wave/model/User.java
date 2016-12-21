@@ -15,7 +15,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(length = 20)
     private String nickname;
@@ -28,8 +28,7 @@ public class User {
 
     private String password;
 
-    @Column(length = 30)
-    private String salt;
+    private Boolean enabled;
 
     private int age;
 
@@ -46,21 +45,21 @@ public class User {
 
     private float account_balance;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user")
     private List<TradeRecord> records=new ArrayList<TradeRecord>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class, mappedBy = "user")
     private List<UserContract> contracts=new ArrayList<UserContract>();
 
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class)
     private List<UserTag> tags=new ArrayList<UserTag>();
 
-    public String getSalt() {
-        return salt;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<UserTag> getTags() {
@@ -71,8 +70,12 @@ public class User {
         this.tags = tags;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNickname() {

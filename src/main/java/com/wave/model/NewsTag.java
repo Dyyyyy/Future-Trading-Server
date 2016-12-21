@@ -9,12 +9,16 @@ import javax.persistence.*;
 public class NewsTag {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(length = 20)
     private String name;
 
-    public int getId() {
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
         return id;
     }
 

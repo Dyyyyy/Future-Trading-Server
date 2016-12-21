@@ -22,13 +22,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Demo" />
-        <module name="Future-Trading-Server" />
+        <module name="AndroidProject" />
+        <module name="AndroidServer" />
+        <module name="SpringServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Demo" target="1.5" />
-      <module name="Future-Trading-Server" target="1.5" />
+      <module name="AndroidProject" target="1.8" />
+      <module name="AndroidServer" target="1.8" />
+      <module name="SpringServer" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
