@@ -16,9 +16,10 @@ import org.springframework.data.repository.query.Param;
 /**
  * Created by Json on 2016/12/11.
  */
+
 @Transactional
-public interface NewsRepository extends PagingAndSortingRepository<News,Long> {
-	@Query("select n from News n where n.title like :title")
+public interface NewsRepository extends JpaRepository<News,Long> {
+	@Query("select n from News n where n.title like %?1%")
 //	Page<News> findByTitle(@Param("title") String title, Pageable pageable);
-	ArrayList<News> findByTitleLike(@Param("title") String title);
+	ArrayList<News> findByTitleLike(String title);
 }

@@ -23,7 +23,6 @@ import com.wave.repository.EntityRepository.NewsRepository;
 public class NewsController {
 	@Autowired
 	private NewsRepository news_repository;
-//	Pageable pageable = new PageRequest(1, 20);
 
 	@RequestMapping(value = "/news/search", method = RequestMethod.POST)
 //	public Page<News> searchNews(

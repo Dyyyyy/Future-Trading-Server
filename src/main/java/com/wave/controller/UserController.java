@@ -6,11 +6,9 @@ import com.wave.staticsetting.ReturnStatus;
 import com.wave.staticsetting.StaticConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
@@ -20,6 +18,9 @@ import java.util.HashMap;
 public class UserController {
     @Autowired
     private UserRepository user_repository;
+
+    @Autowired
+    HttpServletRequest request;
 
     @RequestMapping(value = "/user/login")
     public HashMap<String,Integer> login() {
@@ -85,5 +86,10 @@ public class UserController {
     @RequestMapping(value = "/user/test")
     public HashMap<String, Integer> test() {
         return ReturnStatus.getReturn(ReturnStatus.LOGIN_USER_NONEXIST);
+    }
+
+    @RequestMapping(value = "/user/get_user")
+    public User getUser(){
+        return user_repository.findByPhoneNumber(request.getRemoteUser());
     }
 }

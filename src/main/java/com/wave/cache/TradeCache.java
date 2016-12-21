@@ -68,6 +68,13 @@ public class TradeCache {
         contracts_url = StaticConfig.CONTRACT_CURRENT_URL;
         contract_count = 0;
     }
+    public List<FuturesExchange> getExchanges(){
+        return exchanges;
+    }
+
+    public HashMap<String, ContractItem> getItem_Map(){
+        return item_map;
+    }
 
     public void init() {
         exchanges = f_repository.findAll();
@@ -84,6 +91,7 @@ public class TradeCache {
             }
         }
         configContractUrl();
+        refresh();
     }
 
     public String getContracts_url() {
@@ -174,7 +182,7 @@ public class TradeCache {
      * @return
      */
 
-    private boolean initFoundationData() {
+    public boolean initFoundationData() {
         List<FuturesExchange> exchanges = initExchanges();
         List<ProductFuture> futures = new ArrayList<>();
         List<ContractItem> items = new ArrayList<>();
@@ -187,7 +195,7 @@ public class TradeCache {
                 //access item data
                 HttpGet get = new HttpGet(url);
                 get.addHeader("Authorization", "Bearer " + StaticConfig.ACCESS_TOKEN);
-                CloseableHttpClient client = createHttpsClient();
+                CloseableHttpClient client = StaticConfig.createHttpsClient();
                 CloseableHttpResponse response = client.execute(get);
                 HttpEntity entity = response.getEntity();
                 String body = EntityUtils.toString(entity);
@@ -200,6 +208,7 @@ public class TradeCache {
                 String product_name = "";          //etc "沪白银"
                 for (int i = 0; i < array.size(); i++) {
                     ContractItem contract_item = (ContractItem) JSONObject.toBean(array.getJSONObject(i), ContractItem.class);
+                    contract_item.setTicker(contract_item.getTicker().toLowerCase());
                     String item_name = contract_item.getSecShortName();
                     String tmp_name = item_name.substring(0, item_name.length() - 4);
                     if (!tmp_name.equals(product_name)) {
@@ -239,37 +248,6 @@ public class TradeCache {
         p_repository.save(futures);
         c_repository.save(items);
         return true;
-    }
-
-    private CloseableHttpClient createHttpsClient() {
-        X509TrustManager x509mgr = new X509TrustManager() {
-            @Override
-            public void checkClientTrusted(X509Certificate[] xcs, String string) {
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] xcs, String string) {
-            }
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-        };
-        //因为java客户端要进行安全证书的认证，这里我们设置ALLOW_ALL_HOSTNAME_VERIFIER来跳过认证，否则将报错
-        SSLConnectionSocketFactory sslsf = null;
-        try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new TrustManager[]{x509mgr}, null);
-            sslsf = new SSLConnectionSocketFactory(
-                    sslContext,
-                    SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return HttpClients.custom().setSSLSocketFactory(sslsf).build();
     }
 
     private List<FuturesExchange> initExchanges() {
