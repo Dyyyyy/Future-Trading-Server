@@ -1,5 +1,7 @@
 package com.wave.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
@@ -45,7 +47,7 @@ public class User {
     private String email;
 
     private float account_balance;
-
+    
     private float deposit;
     
     private float totalProfile;
@@ -57,6 +59,7 @@ public class User {
     private Set<UserContract> contracts;
 
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class, fetch = FetchType.EAGER)
+
     private Set<UserTag> tags;
 
     public Boolean getEnabled() {

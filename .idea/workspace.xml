@@ -57,6 +57,7 @@
           </provider>
         </entry>
       </file>
+
       <file leaf-file-name="ContractController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/controller/ContractController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -67,6 +68,7 @@
           </provider>
         </entry>
       </file>
+
       <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/WebSecurityConfig.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -77,6 +79,7 @@
           </provider>
         </entry>
       </file>
+
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -90,6 +93,7 @@
           </provider>
         </entry>
       </file>
+
       <file leaf-file-name="ContractItem.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/model/ContractItem.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -103,6 +107,7 @@
           </provider>
         </entry>
       </file>
+
       <file leaf-file-name="FuturesExchange.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/cache/FuturesExchange.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -116,6 +121,7 @@
           </provider>
         </entry>
       </file>
+
       <file leaf-file-name="ProductFuture.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/cache/ProductFuture.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -1058,6 +1064,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39810428" sideWeight="0.49707174" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39810428" sideWeight="0.49707174" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1462,7 +1469,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/cache/ContractTradeInfo.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/model/ContractItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="166" column="35" selection-start-line="166" selection-start-column="35" selection-end-line="166" selection-end-column="35" />

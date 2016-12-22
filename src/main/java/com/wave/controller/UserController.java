@@ -13,17 +13,15 @@ import com.wave.staticsetting.ReturnStatus;
 import com.wave.staticsetting.StaticConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 
 @RestController
@@ -42,6 +40,9 @@ public class UserController {
     private UserContractRepository userContractRepository;
     @Autowired
     private TradeCache tradeCache;
+
+    @Autowired
+    HttpServletRequest request;
 
     @RequestMapping(value = "/user/login")
     public HashMap<String,Integer> login() {
@@ -402,5 +403,10 @@ public class UserController {
     		results.add(result);
     	}
     	return results;
+    }
+
+    @RequestMapping(value = "/user/get_user")
+    public User getUser(){
+        return user_repository.findByPhoneNumber(request.getRemoteUser());
     }
 }
