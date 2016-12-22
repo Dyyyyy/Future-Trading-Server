@@ -2,15 +2,15 @@ package com.wave.controller;
 
 import com.wave.cache.FuturesExchange;
 import com.wave.cache.TradeCache;
-import com.wave.model.ContractItem;
 import com.wave.repository.CacheRepository.FutureExchangeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * Created by Json on 2016/12/18.
@@ -21,7 +21,7 @@ public class TestController {
     FutureExchangeRepository repository;
     @Autowired
     TradeCache tradeCache;
-
+    
     @RequestMapping(value = "/test/configure_url")
     public String testConfigUrl(){
         return tradeCache.getContracts_url();
@@ -57,4 +57,7 @@ public class TestController {
         repository.save(exchange);
         return exchange;
     }
+    
+
+    
 }

@@ -84,6 +84,7 @@ public class TradeCache {
             }
         }
         configContractUrl();
+        refresh();
     }
 
     public String getContracts_url() {
@@ -93,20 +94,20 @@ public class TradeCache {
     /**
      * update the data
      */
-    @Scheduled(cron = "* * 9-11,14-15,21-23 ? * MON-FRI")
-    public void updateDataSlotOne() {
-        refresh();
-    }
-
-    @Scheduled(cron = "* 0-30 11,23 ? * MON-FRI")
-    public void updateDataSlotTwo() {
-        refresh();
-    }
-
-    @Scheduled(cron = "* 30-59 13 ? * MON-FRI")
-    public void updateDataSlotThree() {
-        refresh();
-    }
+//    @Scheduled(cron = "* * 9-11,14-15,21-23 ? * MON-FRI")
+//    public void updateDataSlotOne() {
+//        refresh();
+//    }
+//
+//    @Scheduled(cron = "* 0-30 11,23 ? * MON-FRI")
+//    public void updateDataSlotTwo() {
+//        refresh();
+//    }
+//
+//    @Scheduled(cron = "* 30-59 13 ? * MON-FRI")
+//    public void updateDataSlotThree() {
+//        refresh();
+//    }
 
     public void configContractUrl() {
         Calendar calendar = Calendar.getInstance();

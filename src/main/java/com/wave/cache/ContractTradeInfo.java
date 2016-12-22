@@ -1,5 +1,5 @@
 package com.wave.cache;
-;
+
 import com.wave.model.ContractItem;
 import com.wave.model.HistoryTrade;
 import com.wave.repository.EntityRepository.HistoryTradeRepository;
