@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/test","/user/register","/test/*","/contract/item/*", "/contract/**", "/user/*","/news/search").permitAll()
+                .antMatchers("/user/test","/user/register","/test/*","/contract/item/*", "/contract/**", "/user/*","/news/**", "/trade_info").permitAll()
 
                 .anyRequest().authenticated()
 
@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .loginPage("/user/login")
                 .failureForwardUrl("/user/login_fail")
                 .successForwardUrl("/user/login_success")
-                .usernameParameter("phone_number")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 .permitAll()
 
@@ -60,8 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select phone_number, password, enabled from users where phone_number = ?")
-                .authoritiesByUsernameQuery("select phone_number, password from users where phone_number = ?")
+                .usersByUsernameQuery("select email, password, enabled from users where email = ?")
+                .authoritiesByUsernameQuery("select email, password from users where email = ?")
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 }

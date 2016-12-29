@@ -3,6 +3,7 @@ package com.wave.repository.EntityRepository;
 import com.wave.model.News;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -22,4 +23,10 @@ public interface NewsRepository extends JpaRepository<News,Long> {
 	@Query("select n from News n where n.title like %?1%")
 //	Page<News> findByTitle(@Param("title") String title, Pageable pageable);
 	ArrayList<News> findByTitleLike(String title);
+	
+//	Page<News> findAll(Pageable pageable);
+	ArrayList<News> findAll();
+	
+	@Query("select n from News n where n.id = ?1")
+	News findById(long id);
 }

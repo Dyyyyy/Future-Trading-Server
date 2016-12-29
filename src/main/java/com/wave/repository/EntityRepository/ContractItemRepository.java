@@ -16,5 +16,6 @@ public interface ContractItemRepository extends JpaRepository<ContractItem,Long>
 	 @Query("select c from ContractItem c where c.contractObject = :contractObject")
     List<ContractItem> findByContractObject(@Param("contractObject") String contractObject);
     ContractItem findBysecShortName(@Param("secShortName") String secShortName);
+    ContractItem findByTicker(@Param("ticker") String ticker);
     ContractItem findById(@Param("id") long id);
 }
