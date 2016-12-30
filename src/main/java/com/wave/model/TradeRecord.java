@@ -24,7 +24,8 @@ public class TradeRecord {
     private int open_offset;
     private float amount;
     private float price;
-
+    private int type;
+    private long handsId;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
@@ -90,5 +91,21 @@ public class TradeRecord {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+    
+    public int getType() {
+        return type;
+    }
+    
+    public void setType(int type) {
+    	this.type = type;
+    }
+    
+    public long gethandsId() {
+        return handsId;
+    }
+    
+    public void sethandsId(long handsId) {
+    	this.handsId = handsId;
     }
 }

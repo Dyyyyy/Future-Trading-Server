@@ -47,13 +47,19 @@ public class User {
     private String email;
 
     private float account_balance;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user",fetch = FetchType.EAGER)
+    
+    private float deposit;
+    
+    private float totalProfile;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = TradeRecord.class, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<TradeRecord> records;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class, mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,targetEntity = UserContract.class, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserContract> contracts;
 
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = UserTag.class, fetch = FetchType.EAGER)
+
     private Set<UserTag> tags;
 
     public Boolean getEnabled() {
@@ -175,5 +181,21 @@ public class User {
 
     public void setRecords(Set<TradeRecord> records) {
         this.records = records;
+    }
+    
+    public float getDepist() {
+        return deposit;
+    }
+
+    public void setDepist(float deposit) {
+        this.deposit = deposit;
+    }
+    
+    public float getTotalProfile() {
+    	return totalProfile;
+    }
+    
+    public void setTotalProfile(float totalProfile) {
+    	this.totalProfile = totalProfile;
     }
 }

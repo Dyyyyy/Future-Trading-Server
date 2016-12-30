@@ -38,14 +38,15 @@ public class ContractController {
         List<SimpleTrade> result=new ArrayList<>();
         HashMap<String,ContractItem> item_maps=tradeCache.getItem_Map();
         try {
-            float delta= (float) (Math.round((Math.random()*10-5)*100))/100;
             String param=request.getParameter("names");
             String[] list=param.split(",");
             for(String abbr:list){
                 ContractItem item=item_maps.get(abbr.toLowerCase());
                 if(item!=null){
+                    float sell_delta= (float) (Math.round((Math.random()*10-5)*100))/100;
+                    float buy_delta= (float) (Math.round((Math.random()*10-5)*100))/100;
                     ContractTradeInfo info=item.getInfo();
-                    SimpleTrade trade=new SimpleTrade(item.getTicker().toUpperCase(),info.getAsk()+delta,info.getBid()+delta,(float) item.getTradeCommiNum(),
+                    SimpleTrade trade=new SimpleTrade(item.getTicker().toUpperCase(),info.getAsk()+sell_delta,info.getBid()+buy_delta,(float) item.getTradeCommiNum(),
                             info.getHighest_price(),info.getLowest_price(),info.getOpening_price(),info.getYesterday_closing_price(),
                             info.getOpen_Interest(),info.getVolume());
                     result.add(trade);
@@ -71,4 +72,17 @@ public class ContractController {
         }
         return result;
     }
+    
+    
+    @RequestMapping(value = "/trade_info")
+    public List<ContractTradeInfo> getTradeList(){
+        Collection<ContractItem> items=tradeCache.getItem_Map().values();
+        List<ContractTradeInfo> result=new ArrayList<>();
+        for(ContractItem item:items){
+            ContractTradeInfo info=item.getInfo();
+            result.add(info);
+        }
+        return result;
+    }
+
 }

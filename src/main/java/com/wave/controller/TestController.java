@@ -1,39 +1,22 @@
 package com.wave.controller;
 
-import com.wave.cache.FuturesExchange;
 import com.wave.cache.TradeCache;
-import com.wave.model.ContractItem;
 import com.wave.repository.CacheRepository.FutureExchangeRepository;
+
 import com.wave.staticsetting.StaticConfig;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+
+import java.net.URI;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Json on 2016/12/18.
@@ -44,7 +27,7 @@ public class TestController {
     FutureExchangeRepository repository;
     @Autowired
     TradeCache tradeCache;
-
+    
     @RequestMapping(value = "/test/configure_url")
     public String testConfigUrl(){
         return tradeCache.getContracts_url();
@@ -72,4 +55,7 @@ public class TestController {
             return 0;
         }
     }
+    
+
+    
 }
