@@ -16,10 +16,9 @@ public class News {
     private long id;
 
     private String title;
+    @Lob
     private String content;
 
-    @Lob
-    private String source;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date release_time;
@@ -70,13 +69,6 @@ public class News {
         this.content = content;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
 
     public Date getRelease_time() {
         return release_time;

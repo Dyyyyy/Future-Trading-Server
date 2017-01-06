@@ -16,7 +16,7 @@ public class ContractItem implements Cloneable{
     private long id;
 
     private String secID;              //合约内部编码
-    private String listDate;             //上市时间
+    private String listDate;           //上市时间
     private String secFullName;        //合约全称
     private String secShortName;       //合约简称
     private String ticker;             //合约代码

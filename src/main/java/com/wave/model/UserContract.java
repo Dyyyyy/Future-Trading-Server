@@ -1,5 +1,7 @@
 package com.wave.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 /**
@@ -23,7 +25,8 @@ public class UserContract {
     private float amount;
     private float price;
     private int open_offset;
-
+    private Date date;
+    private int dir;
     public long getId() {
         return id;
     }
@@ -70,5 +73,21 @@ public class UserContract {
 
     public void setOpen_offset(int open_offset) {
         this.open_offset = open_offset;
+    }
+    
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
+    public int getDir() {
+        return dir;
+    }
+
+    public void setDir(int dir) {
+        this.dir = dir;
     }
 }

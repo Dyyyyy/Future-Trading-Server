@@ -1,10 +1,8 @@
 package com.wave.cache;
-;
 import com.wave.model.ContractItem;
 import com.wave.model.HistoryTrade;
 import com.wave.repository.EntityRepository.HistoryTradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Date;
 import java.util.List;
 

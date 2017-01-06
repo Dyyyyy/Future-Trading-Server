@@ -52,10 +52,6 @@ public class FuturesExchange {
         this.futures = futures;
     }
 
-    public List<ProductFuture> getFutures_list() {
-        return futures_list;
-    }
-
     public void setFutures_list(List<ProductFuture> futures_list) {
         this.futures_list = futures_list;
     }
