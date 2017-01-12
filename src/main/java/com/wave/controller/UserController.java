@@ -1,6 +1,5 @@
 package com.wave.controller;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.wave.cache.TradeCache;
 import com.wave.model.ContractItem;
 import com.wave.model.TradeRecord;
@@ -22,7 +21,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
-
 
 
 
@@ -149,8 +147,7 @@ public class UserController {
     	float account_balance = user.getAccount_balance() + hands * price;
     		
     	//获取合约信息
-    	ContractItem contractItem = new ContractItem();
-    	contractItem = contractItem_repository.findByTicker(name);
+		ContractItem contractItem = contractItem_repository.findByTicker(name);
     		
     	//更新持仓列表
     	UserContract userContract = new UserContract();
@@ -530,6 +527,12 @@ public class UserController {
     	results.put("contract_info", contract_info);
     	return results;
     }
+
+    @RequestMapping(value = "user/applyAllowance")
+	public User applyAllowance(@RequestParam(value = "email")String email){
+		User user=user_repository.findByEmail(email);
+		return user;
+	}
 }
 
 
