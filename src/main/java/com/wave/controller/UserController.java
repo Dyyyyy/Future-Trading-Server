@@ -16,12 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-
 
 
 @RestController
@@ -72,26 +70,33 @@ public class UserController {
 
     @RequestMapping(value = "/user/register")
     public HashMap<String,Integer> register(@RequestParam(value = "username")String username,
-                                            //@RequestParam(value = "first_name")String f_n,
-                                            //@RequestParam(value = "last_name")String l_n,
                                             @RequestParam(value = "password")String password,
-                                            @RequestParam(value = "age",defaultValue = "0")int age,
-//                                            @RequestParam(value = "sex",defaultValue = "0")int sex,
-//                                            @RequestParam(value = "phone_number")String p_n,
+                                            @RequestParam(value = "age",defaultValue = "0")String age_str,
                                             @RequestParam(value = "email")String email){
 
         password=new BCryptPasswordEncoder().encode(password);
         System.out.println(password.length());
+        int age=0;
+        String[] split1=email.split("@");
+        if(split1.length==2){
+            String[] split2=split1[1].split(".");
+            if(split2.length==2){
+                if(!split2[1].equals("cn")&&!split2[2].equals("com")) return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
+            }else return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
+        }else return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
+
+        Pattern pattern=Pattern.compile("[0-9]*");
+        if(pattern.matcher(age_str).matches()){
+            age=Integer.parseInt(age_str);
+        }else {
+            return ReturnStatus.getReturn(ReturnStatus.INPUT_ERROR);
+        }
 
         User user=new User();
         user.setNickname(username);
-//        user.setFirst_name(f_n);
-//        user.setLast_name(l_n);
         user.setPassword(password);
         user.setAge(age);
-//        user.setPhone_number(p_n);
         user.setEmail(email);
-//        user.setSex(sex);
         user.setPortrait_url(StaticConfig.DEFAULT_PORTRAIT_URL);
         user.setEnabled(true);
         user.setTotalProfile(0);
@@ -104,7 +109,7 @@ public class UserController {
             return ReturnStatus.getReturn(ReturnStatus.REGISTER_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return ReturnStatus.getReturn(ReturnStatus.REGISTER_FAIL);
+            return ReturnStatus.getReturn(ReturnStatus.EMAIL_EXIST);
         }
     }
 
@@ -207,8 +212,7 @@ public class UserController {
 		float account_balance = user.getAccount_balance() - hands * price;
 		
 		//获取合约信息
-		ContractItem contractItem = new ContractItem();
-		contractItem = contractItem_repository.findByTicker(name);
+		ContractItem contractItem = contractItem_repository.findByTicker(name);
 
 		//更新持仓列表
 		UserContract userContract = new UserContract();
@@ -248,8 +252,7 @@ public class UserController {
     @RequestMapping(value = "user/handsRefresh")
     public ArrayList<HashMap<String, Object>> HandsRefresh(@RequestParam(value = "email")String email) {
 //    											@RequestParam HttpServletRequest request) {
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	
     	List<UserContract> userContracts = userContractRepository.findByUser(user);
     	
@@ -287,25 +290,14 @@ public class UserController {
     
     @RequestMapping(value = "/user/accountrefresh")
     public HashMap<String, Object> AccountRefresh(@RequestParam(value = "email")String email) {
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	
     	HashMap<String, Object> result = new HashMap<>();
     	result.put("account", user.getNickname());
     	result.put("balance", user.getAccount_balance());
-    	List<UserContract> userContracts = userContractRepository.findByUser(user);
-    	float netWorth = user.getAccount_balance();
+    	float netWorth = calculateNetWorth(user);
     	float marginLevel = user.getDepist();
     	float occupyMargin = 0;
-    	for(UserContract userContract : userContracts) {
-    		if(userContract.getOpen_offset() == 1)
-    			continue;
-    		occupyMargin += marginLevel * userContract.getPrice() * userContract.getAmount();
-    		if (userContract.getDir() == 0)
-				netWorth -= userContract.getPrice()*userContract.getAmount();
-    		else
-    			netWorth += userContract.getPrice()*userContract.getAmount();
-    	}
     	result.put("netWorth", netWorth);
     	if(netWorth < 0)
     		result.put("netWorhColor", "red");
@@ -326,12 +318,8 @@ public class UserController {
     										@RequestParam(value = "email") String email) {
     	HashMap<String, Object> result = new HashMap<>();
     	Date date = new Date();
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
-    	UserContract userContract = new UserContract();
-    	userContract = userContractRepository.findById(order);
-//    	List<TradeRecord> oleTradeRecord;
-//    	oleTradeRecord = tradeRecordRepository.findByHandsId(order);
+    	User user = user_repository.findByEmail(email);
+    	UserContract userContract = userContractRepository.findById(order);
     	TradeRecord tradeRecord = new TradeRecord();
     	tradeRecord.setPrice(price);
     	tradeRecord.setAmount(userContract.getAmount());
@@ -342,8 +330,7 @@ public class UserController {
     	tradeRecord.setOpen_offset(1);
     	userContract.setOpen_offset(1);
     	float account_balance = user.getAccount_balance();
-    	ArrayList<TradeRecord> oldTradeRecord = new ArrayList<>();
-    	oldTradeRecord = tradeRecordRepository.findByHandsId(order);
+    	ArrayList<TradeRecord> oldTradeRecord = tradeRecordRepository.findByHandsId(order);
     	if(userContract.getDir() == 0) {
     		tradeRecord.setTrading_type(1);
     		if(account_balance - tradeRecord.getPrice() < 0) {
@@ -374,8 +361,7 @@ public class UserController {
     @RequestMapping(value = "/user/donerefresh")
     public List<HashMap<String, Object>> DoneRefresh(@RequestParam(value = "email") String email) {
     	ArrayList<HashMap<String, Object>> results = new ArrayList<HashMap<String,Object>>();
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	List<TradeRecord> tradeRecords = tradeRecordRepository.findByUser(user);
     	for(TradeRecord tradeRecord : tradeRecords) {
     		HashMap<String, Object> result = new HashMap<>();
@@ -404,8 +390,7 @@ public class UserController {
     @RequestMapping(value = "/user/profilerefresh")
     public List<HashMap<String, Object>> ProfileRefresh(@RequestParam(value = "email") String email) {
     	ArrayList<HashMap<String, Object>> results = new ArrayList<HashMap<String,Object>>();
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	ArrayList<UserContract> userContracts = userContractRepository.findByUser(user);
     	for(UserContract userContract : userContracts) {
     		if(userContract.getOpen_offset() == 0)
@@ -444,8 +429,7 @@ public class UserController {
     
     @RequestMapping(value = "/user/user_info")
     public HashMap<String, Object> UserInfo(@RequestParam(value = "email")String email) {
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	HashMap<String, Object> result = new HashMap<>();
     	result.put("user_id", user.getId());
     	result.put("username", user.getNickname());
@@ -461,11 +445,20 @@ public class UserController {
     @RequestMapping(value = "/user/editUserInfo")
     public HashMap<String, Integer> editUserInfo(@RequestParam(value = "email")String email,
     											@RequestParam(value = "username")String username,
-    											@RequestParam(value = "age")Integer age,
-    											@RequestParam(value = "sex")Integer sex) {
-    	User user = new User();
+    											@RequestParam(value = "age")String age_str,
+    											@RequestParam(value = "sex")String sex_str) {
     	try{
-    		user = user_repository.findByEmail(email);
+            int age=0;
+            int sex=0;
+            Pattern pattern=Pattern.compile("[0-9]*");
+            if(pattern.matcher(age_str).matches()&&pattern.matcher(sex_str).matches()){
+                age=Integer.parseInt(age_str);
+                sex=Integer.parseInt(sex_str);
+            }else {
+                return ReturnStatus.getReturn(ReturnStatus.INPUT_ERROR);
+            }
+
+    		User user = user_repository.findByEmail(email);
     		user.setNickname(username);
     		user.setAge(age);
     		user.setSex(sex);
@@ -473,15 +466,14 @@ public class UserController {
     		return ReturnStatus.getReturn(ReturnStatus.REGISTER_SUCCESS);
     	}catch (Exception e) {
 			// TODO: handle exception
-    		return ReturnStatus.getReturn(ReturnStatus.REGISTER_FAIL);
+    		return ReturnStatus.getReturn(ReturnStatus.INPUT_ERROR);
 		}
     }
     
     @RequestMapping(value = "/user/trade_record")
     public ArrayList<HashMap<String, Object>> TradeRecord(@RequestParam(value = "email")String email) {
     	ArrayList<HashMap<String, Object>> results = new ArrayList<HashMap<String,Object>>();
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	ArrayList<TradeRecord> tradeRecords = new ArrayList<>();
     	tradeRecords = tradeRecordRepository.findByUser(user);
     	for (TradeRecord tradeRecord : tradeRecords) {
@@ -502,8 +494,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/account_info")
     public HashMap<String, Object> AccountInfo(@RequestParam(value = "email") String email){
-    	User user = new User();
-    	user = user_repository.findByEmail(email);
+    	User user = user_repository.findByEmail(email);
     	HashMap<String, Object> results = new HashMap();
     	results.put("name", user.getNickname());
     	results.put("account_balance", user.getAccount_balance());
@@ -529,10 +520,33 @@ public class UserController {
     }
 
     @RequestMapping(value = "user/applyAllowance")
-	public User applyAllowance(@RequestParam(value = "email")String email){
+	public int applyAllowance(@RequestParam(value = "email")String email){
 		User user=user_repository.findByEmail(email);
-		return user;
+        float netWorth=calculateNetWorth(user);
+        if(netWorth<=1000){
+            user.setAccount_balance(user.getAccount_balance()+50000);
+            return 0;
+        }
+		return 1;
 	}
+
+	private float calculateNetWorth(User user){
+        Set<UserContract> userContracts=user.getContracts();
+
+        float netWorth = user.getAccount_balance();
+        float marginLevel = user.getDepist();
+        float occupyMargin = 0;
+        for(UserContract userContract : userContracts) {
+            if(userContract.getOpen_offset() == 1)
+                continue;
+            occupyMargin += marginLevel * userContract.getPrice() * userContract.getAmount();
+            if (userContract.getDir() == 0)
+                netWorth -= userContract.getPrice()*userContract.getAmount();
+            else
+                netWorth += userContract.getPrice()*userContract.getAmount();
+        }
+        return netWorth;
+    }
 }
 
 
