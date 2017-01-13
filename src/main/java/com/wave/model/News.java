@@ -19,13 +19,11 @@ public class News {
     @Lob
     private String content;
 
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date release_time;
 
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = NewsTag.class)
     private List<NewsTag> tags=new ArrayList<NewsTag>();
-
 
     public long getId() {
         return id;

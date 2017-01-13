@@ -5,6 +5,7 @@ import com.wave.cache.FuturesExchange;
 import com.wave.cache.ProductFuture;
 import com.wave.cache.TradeCache;
 import com.wave.model.ContractItem;
+import com.wave.repository.EntityRepository.NewsRepository;
 import com.wave.service.News;
 import com.wave.service.Price;
 import com.wave.service.Service;
@@ -96,10 +97,30 @@ public class ContractController {
         return prices;
     }
 
+    @Autowired
+    private NewsRepository newsRepository;
+
     @RequestMapping(value = "/relate_news")
-    public List<News> relateNews(@RequestParam(name = "name") String name) {
+    public List<Map> relateNews(@RequestParam(name = "name") String name) {
         List<News> newses = Service.futureRelatedNews(name);
-        return newses;
+        List<Map> result = new ArrayList<>();
+        for (News item: newses) {
+            com.wave.model.News news = newsRepository.findByUrl(item.url);
+            if (news == null) {
+                news = new com.wave.model.News();
+                news.setTitle(item.title);
+                news.setContent(item.content);
+                news.setUrl(item.url);
+                newsRepository.save(news);
+            }
+
+            Map temp = new HashMap();
+            temp.put("url", news.getUrl());
+            temp.put("id", news.getId());
+            temp.put("title", news.getTitle());
+            result.add(temp);
+        }
+        return result;
     }
 
 }

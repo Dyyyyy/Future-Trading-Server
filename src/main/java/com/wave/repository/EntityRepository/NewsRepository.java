@@ -29,4 +29,7 @@ public interface NewsRepository extends JpaRepository<News,Long> {
 	
 	@Query("select n from News n where n.id = ?1")
 	News findById(long id);
+
+	@Query("select n from News n where n.url = ?1")
+	News findByUrl(String url);
 }
