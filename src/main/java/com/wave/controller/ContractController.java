@@ -5,6 +5,7 @@ import com.wave.cache.FuturesExchange;
 import com.wave.cache.ProductFuture;
 import com.wave.cache.TradeCache;
 import com.wave.model.ContractItem;
+import com.wave.service.News;
 import com.wave.service.Price;
 import com.wave.service.Service;
 import com.wave.viewmodel.SimpleContract;
@@ -93,6 +94,12 @@ public class ContractController {
                                 @RequestParam("type") int type) {
         List<Price> prices = Service.predictPrice(name);
         return prices;
+    }
+
+    @RequestMapping(value = "/relate_news")
+    public List<News> relateNews(@RequestParam(name = "name") String name) {
+        List<News> newses = Service.futureRelatedNews(name);
+        return newses;
     }
 
 }
