@@ -5,11 +5,14 @@ import com.wave.cache.FuturesExchange;
 import com.wave.cache.ProductFuture;
 import com.wave.cache.TradeCache;
 import com.wave.model.ContractItem;
+import com.wave.service.Price;
+import com.wave.service.Service;
 import com.wave.viewmodel.SimpleContract;
 import com.wave.viewmodel.SimpleTrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.ManyToOne;
@@ -83,6 +86,13 @@ public class ContractController {
             result.add(info);
         }
         return result;
+    }
+
+    @RequestMapping(value = "/predict_price")
+    public List<Price> getPrice(@RequestParam("name") String name,
+                                @RequestParam("type") int type) {
+        List<Price> prices = Service.predictPrice(name);
+        return prices;
     }
 
 }

@@ -40,12 +40,13 @@ public class Service {
         List<Price> prices = null;
 
         try {
-            transport = new TSocket("10.60.42.202", 8888);
+//            transport = new TSocket("10.60.42.202", 8888);
+            transport = new TSocket("192.168.1.109", 8888);
             TProtocol protocol = new TBinaryProtocol(transport);
             FutureService.Client client = new FutureService.Client(protocol);
             transport.open();
 
-            prices = client.predictPrice(future);
+            prices = client.predictPrice(future, (short) 1);
 
         } catch (TTransportException e) {
             e.printStackTrace();
