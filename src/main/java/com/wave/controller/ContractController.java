@@ -123,6 +123,7 @@ public class ContractController {
             temp.put("url", news.getUrl());
             temp.put("id", news.getId());
             temp.put("title", news.getTitle());
+            temp.put("related", item.getRelated());
             result.add(temp);
 
             if (count > 20)

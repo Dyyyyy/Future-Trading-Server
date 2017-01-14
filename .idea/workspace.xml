@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="09ea4cb2-9361-45cb-a88f-0a95ace5b777" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/wave/controller/ContractController.java" afterPath="$PROJECT_DIR$/src/main/java/com/wave/controller/ContractController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/wave/repository/EntityRepository/NewsRepository.java" afterPath="$PROJECT_DIR$/src/main/java/com/wave/repository/EntityRepository/NewsRepository.java" />
     </list>
     <ignored path="Futures-Trading-Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,8 +59,8 @@
       <file leaf-file-name="ContractController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/controller/ContractController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+            <state relative-caret-position="436">
+              <caret line="125" column="51" selection-start-line="125" selection-start-column="51" selection-end-line="125" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -920,12 +919,12 @@
       <updated>1484225300626</updated>
       <workItem from="1484225317908" duration="3428000" />
       <workItem from="1484303143462" duration="9204000" />
-      <workItem from="1484365851442" duration="1697000" />
+      <workItem from="1484365851442" duration="2024000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14329000" />
+    <option name="totallyTimeSpent" value="14656000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1985" y="24" width="1855" height="1056" extended-state="0" />
@@ -1264,8 +1263,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wave/controller/ContractController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+        <state relative-caret-position="436">
+          <caret line="125" column="51" selection-start-line="125" selection-start-column="51" selection-end-line="125" selection-end-column="51" />
           <folding />
         </state>
       </provider>
