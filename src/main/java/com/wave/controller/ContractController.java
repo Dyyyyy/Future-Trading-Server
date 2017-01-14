@@ -104,14 +104,19 @@ public class ContractController {
     public List<Map> relateNews(@RequestParam(name = "name") String name) {
         List<News> newses = Service.futureRelatedNews(name);
         List<Map> result = new ArrayList<>();
+        int count = 0;
         for (News item: newses) {
-            com.wave.model.News news = newsRepository.findByUrl(item.url);
-            if (news == null) {
+            count++;
+            List<com.wave.model.News> newss = newsRepository.findByUrl(item.url);
+            com.wave.model.News news;
+            if (newss.size() == 0) {
                 news = new com.wave.model.News();
                 news.setTitle(item.title);
                 news.setContent(item.content);
                 news.setUrl(item.url);
                 newsRepository.save(news);
+            } else {
+                news = newss.get(0);
             }
 
             Map temp = new HashMap();
@@ -119,6 +124,9 @@ public class ContractController {
             temp.put("id", news.getId());
             temp.put("title", news.getTitle());
             result.add(temp);
+
+            if (count > 20)
+                break;
         }
         return result;
     }
