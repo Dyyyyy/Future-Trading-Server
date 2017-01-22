@@ -5,11 +5,16 @@ import com.wave.cache.FuturesExchange;
 import com.wave.cache.ProductFuture;
 import com.wave.cache.TradeCache;
 import com.wave.model.ContractItem;
+import com.wave.repository.EntityRepository.NewsRepository;
+import com.wave.service.News;
+import com.wave.service.Price;
+import com.wave.service.Service;
 import com.wave.viewmodel.SimpleContract;
 import com.wave.viewmodel.SimpleTrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.ManyToOne;
@@ -81,6 +86,48 @@ public class ContractController {
         for(ContractItem item:items){
             ContractTradeInfo info=item.getInfo();
             result.add(info);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/predict_price")
+    public List<Price> getPrice(@RequestParam("name") String name,
+                                @RequestParam("type") int type) {
+        List<Price> prices = Service.predictPrice(name);
+        return prices;
+    }
+
+    @Autowired
+    private NewsRepository newsRepository;
+
+    @RequestMapping(value = "/relate_news")
+    public List<Map> relateNews(@RequestParam(name = "name") String name) {
+        List<News> newses = Service.futureRelatedNews(name);
+        List<Map> result = new ArrayList<>();
+        int count = 0;
+        for (News item: newses) {
+            count++;
+            List<com.wave.model.News> newss = newsRepository.findByUrl(item.url);
+            com.wave.model.News news;
+            if (newss.size() == 0) {
+                news = new com.wave.model.News();
+                news.setTitle(item.title);
+                news.setContent(item.content);
+                news.setUrl(item.url);
+                newsRepository.save(news);
+            } else {
+                news = newss.get(0);
+            }
+
+            Map temp = new HashMap();
+            temp.put("url", news.getUrl());
+            temp.put("id", news.getId());
+            temp.put("title", news.getTitle());
+            temp.put("related", item.getRelated());
+            result.add(temp);
+
+            if (count > 20)
+                break;
         }
         return result;
     }

@@ -13,7 +13,9 @@ public class ReturnStatus {
     }
 
     public static int REGISTER_SUCCESS=0;
-    public static int REGISTER_FAIL=1;
+    public static int EMAIL_ERROR=1;
+    public static int INPUT_ERROR=2;
+    public static int EMAIL_EXIST=3;
 
     public static int LOGIN_SUCCESS=0;
     public static int LOGIN_DATA_MISSING=1;

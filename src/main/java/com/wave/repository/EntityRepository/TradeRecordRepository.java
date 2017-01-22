@@ -1,6 +1,5 @@
 package com.wave.repository.EntityRepository;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.wave.model.TradeRecord;
 import com.wave.model.User;
 import com.wave.model.UserContract;
