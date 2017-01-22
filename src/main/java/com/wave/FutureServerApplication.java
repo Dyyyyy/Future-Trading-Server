@@ -17,9 +17,9 @@ public class FutureServerApplication extends WebMvcConfigurationSupport{
 	public static DataSource dataSource(){
 		org.apache.tomcat.jdbc.pool.DataSource datasource=new org.apache.tomcat.jdbc.pool.DataSource();
 		datasource.setDriverClassName("com.mysql.jdbc.Driver");
-		datasource.setUrl("jdbc:mysql://10.60.42.203:8888/db_05");
-		datasource.setUsername("T05");
-		datasource.setPassword("ywHJOiq2");
+		datasource.setUrl("jdbc:mysql://115.159.103.146:3306/FuturesDB");
+		datasource.setUsername("FuturesDBA");
+		datasource.setPassword("123qweasd");
 		return datasource;
 	}
 
