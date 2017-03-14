@@ -55,6 +55,11 @@ public class TestController {
             return 0;
         }
     }
+
+    @RequestMapping(value = "/test/webhook")
+    public String webhook(){
+        return "success, Webhooks!";
+    }
     
 
     
