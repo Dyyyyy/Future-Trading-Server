@@ -10,24 +10,25 @@ import java.util.List;
  * Created by Json on 2016/11/13.
  */
 public class ContractTradeInfo {
-    private String name;                     //名字
-    private String abbreviation;             //简称
-    private float opening_price;               //开盘价
-    private float highest_price;               //最高价
-    private float lowest_price;                //最低价
-    private float yesterday_closing_price;     //昨日收盘价
-    private float Bid;                         //买价
-    private float Ask;                         //卖价
-    private float latest_price;                //最新价
-    private float settlement_price;            //结算价
-    private float yesterday_settlement_price;  //昨结算
-    private int open_Interest;               //持仓量
-    private int volume;                      //成交量
+
+    volatile private String name;                     //名字
+    volatile private String abbreviation;             //简称
+    volatile private float opening_price;               //开盘价
+    volatile private float highest_price;               //最高价
+    volatile private float lowest_price;                //最低价
+    volatile private float yesterday_closing_price;     //昨日收盘价
+    volatile private float Bid;                         //买价
+    volatile private float Ask;                         //卖价
+    volatile private float latest_price;                //最新价
+    volatile private float settlement_price;            //结算价
+    volatile private float yesterday_settlement_price;  //昨结算
+    volatile private int open_Interest;               //持仓量
+    volatile private int volume;                      //成交量
 
     private ContractItem contract_item;
-    private Date date;                       //日期
+    volatile private Date date;                       //日期
 
-    private boolean isinit;
+    volatile private boolean isinit;
 
     public ContractTradeInfo(String n, String abbr, ContractItem item){
         name=n;

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FutureTradingServer.iml" filepath="$PROJECT_DIR$/FutureTradingServer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidproject.iml" filepath="$PROJECT_DIR$/androidproject.iml" />
     </modules>
   </component>
 </project>

@@ -35,7 +35,7 @@ public class TestController {
 
     @RequestMapping(value = "/test/init")
     public boolean testinit(){
-        return true;
+        return tradeCache.initFoundationData();
     }
 
     @RequestMapping(value = "/test/5min")

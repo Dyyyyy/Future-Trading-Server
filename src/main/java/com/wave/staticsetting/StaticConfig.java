@@ -20,7 +20,7 @@ public class StaticConfig {
     public static final String CONTRACT_ITEM_URL="https://api.wmcloud.com/data/v1/api/future/getFutu.json?field=&secID=&ticker=&contractStatus=L&contractObject=&exchangeCD=";
     public static final String KLINE_5MIN_URL="http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=";
 
-    public static final String ACCESS_TOKEN="4dda6f01247c0ff97010b97ccccf76e94c4ad047436843bf3d62063421025579";
+    public static final String ACCESS_TOKEN="bdca2849f7c2feb442606b4a1bf3cab419d62403c8621249bdfe104d83a07861";
 
     public static CloseableHttpClient createHttpsClient() {
         X509TrustManager x509mgr = new X509TrustManager() {

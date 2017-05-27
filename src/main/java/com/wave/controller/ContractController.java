@@ -48,10 +48,10 @@ public class ContractController {
             for(String abbr:list){
                 ContractItem item=item_maps.get(abbr.toLowerCase());
                 if(item!=null){
-                    float sell_delta= (float) (Math.round((Math.random()*10-5)*100))/100;
-                    float buy_delta= (float) (Math.round((Math.random()*10-5)*100))/100;
+//                    float sell_delta= (float) (Math.round((Math.random()*10-5)*100))/100;
+//                    float buy_delta= (float) (Math.round((Math.random()*10-5)*100))/100;
                     ContractTradeInfo info=item.getInfo();
-                    SimpleTrade trade=new SimpleTrade(item.getTicker().toUpperCase(),info.getAsk()+sell_delta,info.getBid()+buy_delta,(float) item.getTradeCommiNum(),
+                    SimpleTrade trade=new SimpleTrade(item.getTicker().toUpperCase(),info.getAsk(),info.getBid(),(float) item.getTradeCommiNum(),
                             info.getHighest_price(),info.getLowest_price(),info.getOpening_price(),info.getYesterday_closing_price(),
                             info.getOpen_Interest(),info.getVolume());
                     result.add(trade);

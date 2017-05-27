@@ -6,19 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="androidproject" />
-        <module name="AndroidProject" />
-        <module name="AndroidServer" />
         <module name="FutureTradingServer" />
-        <module name="SpringServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="AndroidProject" target="1.8" />
-      <module name="androidproject" target="1.8" />
-      <module name="AndroidServer" target="1.8" />
       <module name="FutureTradingServer" target="1.8" />
-      <module name="SpringServer" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
