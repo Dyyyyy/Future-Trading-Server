@@ -77,13 +77,13 @@ public class UserController {
         password=new BCryptPasswordEncoder().encode(password);
         System.out.println(password.length());
         int age=0;
-        String[] split1=email.split("@");
-        if(split1.length==2){
-            String[] split2=split1[1].split(".");
-            if(split2.length==2){
-                if(!split2[1].equals("cn")&&!split2[2].equals("com")) return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
-            }else return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
-        }else return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
+//        String[] split1=email.split("@");
+//        if(split1.length==2){
+//            String[] split2=split1[1].split(".");
+//            if(split2.length==2){
+//                if(!split2[1].equals("cn")&&!split2[2].equals("com")) return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
+//            }else return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
+//        }else return ReturnStatus.getReturn(ReturnStatus.EMAIL_ERROR);
 
         Pattern pattern=Pattern.compile("[0-9]*");
         if(pattern.matcher(age_str).matches()){
